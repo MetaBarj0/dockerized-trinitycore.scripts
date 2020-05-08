@@ -1,5 +1,8 @@
 #!/bin/sh
 
+docker network ls | grep 'tc.internal'
+[ $? -ne 0 ] && docker network create tc.internal
+
 docker run \
   --mount 'type=volume,src=tc.source,dst=/home/tc/source' \
   --mount 'type=volume,src=tc.build,dst=/home/tc/build' \
