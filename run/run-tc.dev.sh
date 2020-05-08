@@ -4,7 +4,7 @@ docker network ls | grep 'tc.internal'
 [ $? -ne 0 ] && docker network create tc.internal
 
 docker run \
-  --mount 'type=volume,src=tc.source,dst=/home/tc/source' \
+  --mount 'type=bind,src=/home/docker/dockerized-trinitycore,dst=/home/tc/source' \
   --mount 'type=volume,src=tc.build,dst=/home/tc/build' \
   --mount 'type=volume,src=tc.install,dst=/home/tc/install' \
   --mount 'type=volume,src=tc.data,dst=/home/tc/data' \
