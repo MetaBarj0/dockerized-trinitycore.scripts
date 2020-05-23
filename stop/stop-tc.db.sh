@@ -1,3 +1,3 @@
 #!/bin/sh
 
-docker stop $(docker ps -q -f ancestor=tc.db)
+docker kill $(docker ps -q -f ancestor=tc.db)
