@@ -22,29 +22,9 @@ RUN apk add --no-cache \
   busybox-extras
 
 RUN adduser -h /home/tc -D tc tc
+
 RUN mkdir /home/tc/.ssh
 RUN chown tc:tc /home/tc/.ssh && chmod 0700 /home/tc/.ssh
-
-ARG SSH_SECRET_KEY
-ARG SSH_PUBLIC_KEY
-
-RUN [ -z "$SSH_SECRET_KEY" ] \
-    && ( echo $'\n============================================================' \
-         && echo 'Missing ssh key definition in SSH_SECRET_KEY build argument.' \
-         && echo $'============================================================\n' \
-         && exit 1 ) \
-    || exit 0
-
-RUN [ -z "$SSH_PUBLIC_KEY" ] \
-    && ( echo $'\n============================================================' \
-         && echo 'Missing ssh key definition in SSH_PUBLIC_KEY build argument.' \
-         && echo $'============================================================\n' \
-         && exit 1 ) \
-    || exit 0
-
-RUN echo "${SSH_SECRET_KEY}" > /home/tc/.ssh/id_rsa \
-    && echo "${SSH_PUBLIC_KEY}" > /home/tc/.ssh/id_rsa.pub
-
 RUN chown tc:tc /home/tc/.ssh/* && chmod 0600 /home/tc/.ssh/*
 
 RUN mkdir -p /home/tc/source \
