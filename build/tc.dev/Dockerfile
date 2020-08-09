@@ -1,4 +1,4 @@
-FROM alpine
+FROM alpine:3.12
 
 RUN apk add --no-cache \
   openssh \
@@ -23,9 +23,8 @@ RUN apk add --no-cache \
 
 RUN adduser -h /home/tc -D tc tc
 
-RUN mkdir /home/tc/.ssh
-RUN chown tc:tc /home/tc/.ssh && chmod 0700 /home/tc/.ssh
-RUN chown tc:tc /home/tc/.ssh/* && chmod 0600 /home/tc/.ssh/*
+COPY --chown=tc:tc create_ssh_secrets.sh /home/tc/create_ssh_secrets.sh
+RUN chmod + x /home/tc/create_ssh_secrets.sh
 
 RUN mkdir -p /home/tc/source \
     && mkdir -p /home/tc/build \
